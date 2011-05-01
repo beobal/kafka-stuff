@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
+	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/4.8/junit-4.8.jar"/>
+	<classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-log4j12/1.6.1/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="src/main/resources/asm-3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/cglib-2.2.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/easymock-3.0.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/jopt-simple-3.2.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/junit-4.1.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/kafka-0.05.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/objenesis-1.2.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/scala-compiler-2.8.0.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/scala-library-2.8.0.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/zkclient-0.1.0.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/zookeeper-3.3.0.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
