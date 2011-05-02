@@ -8,33 +8,54 @@
   <name>delilah</name>
   <url>http://maven.apache.org</url>
   <dependencies>
-    <!-- dependency>
+    <dependency>
       <groupId>com.sna-projects.kafka</groupId>
       <artifactId>kafka</artifactId>
       <version>0.5-SNAPSHOT</version>
-    </dependency-->
+    </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
       <version>1.6.1</version>
     </dependency>
     <dependency>
+  		<groupId>org.clapper</groupId>
+  		<artifactId>grizzled-slf4j_2.8.1</artifactId>
+  		<version>0.4</version>
+	</dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.8</version>
+      <version>4.8.2</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-compiler</artifactId>
+      <version>2.8.1</version>
+    </dependency>
+    <!-- Used for unit testing scala code. -->
+    <dependency>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest</artifactId>
+      <version>1.3</version>
     </dependency>
   </dependencies>
   <repositories>
-    <!-- repository>
-      <id>sonatype-nexus-snapshots</id> 
-      <name>sonatype nexus snapshots repository</name> 
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url> 
-    </repository-->
+    <repository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>sonatype nexus snapshots repository</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </repository>
     <repository>
       <id>scala-tools.org</id>
       <name>Scala-tools Maven2 Repository</name>
       <url>http://scala-tools.org/repo-releases</url>
+    </repository>
+    <repository>
+      <id>third-party-releases</id>
+      <name>external oss releases</name>
+      <url>http://oss.talisplatform.com/content/groups/public</url>
     </repository>
   </repositories>
   <pluginRepositories>
@@ -45,14 +66,113 @@
     </pluginRepository>
   </pluginRepositories>
   <build>
-    <sourceDirectory>src/main/scala</sourceDirectory>
-    <testSourceDirectory>src/test/scala</testSourceDirectory>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.scala-tools</groupId>
+          <artifactId>maven-scala-plugin</artifactId>
+          <version>2.9.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.0.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.scala-tools</groupId>
         <artifactId>maven-scala-plugin</artifactId>
-        ... (see other usage or goals for details) ...
+        <executions>
+          <execution>
+            <id>scala-compile-first</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>add-source</goal>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>scala-test-compile</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add_sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/main/scala</source>
+              </sources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>add_test_sources</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/test/scala</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+    	<groupId>org.apache.maven.plugins</groupId>
+    	<artifactId>maven-eclipse-plugin</artifactId>
+    	<version>2.8</version>
+    	<!-- see http://maven.apache.org/plugins/maven-eclipse-plugin/eclipse-mojo.html for more information -->
+    	<configuration>
+	      	<downloadSources>true</downloadSources>
+	      	<downloadJavadocs>true</downloadJavadocs>
+	      	<projectnatures>
+		        <projectnature>org.scala-ide.sdt.core.scalanature</projectnature>
+		        <projectnature>org.eclipse.jdt.core.javanature</projectnature>
+	      	</projectnatures>
+		    <buildcommands>
+		      <buildcommand>org.scala-ide.sdt.core.scalabuilder</buildcommand>
+		    </buildcommands>
+	      	<classpathContainers>
+	        	<classpathContainer>org.scala-ide.sdt.launching.SCALA_CONTAINER"</classpathContainer>
+	        	<classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
+	      	</classpathContainers>
+	      	<excludes>
+	        	<exclude>org.scala-lang:scala-library</exclude>
+	        	<exclude>org.scala-lang:scala-compiler</exclude>
+	      	</excludes>
+	      	<sourceIncludes>
+		        <sourceInclude>**/*.scala</sourceInclude>
+	        	<sourceInclude>**/*.java</sourceInclude>
+	      	</sourceIncludes>
+        </configuration>
+  	  </plugin>
     </plugins>
   </build>
 </project>

@@ -9,28 +9,33 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import kafka.consumer.ConsumerConfig;
-import kafka.consumer.ConsumerConnector;
 import kafka.consumer.KafkaMessageStream;
-import kafka.consumer.ZookeeperConsumerConnector;
+import kafka.javaapi.consumer.ConsumerConnector;
 import kafka.message.Message;
-import kafka.utils.Utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.talis.status.KafkaProperties;
+
 public class Consumer {
 	private static final transient Logger LOG = LoggerFactory.getLogger(Consumer.class);
 	// specify some consumer properties
-	Properties props = new Properties();
-	ConsumerConfig consumerConfig;
-	ConsumerConnector consumerConnector;
+	
+	private final Properties props;
+	private final ConsumerConfig consumerConfig;
+	private final ConsumerConnector consumerConnector;
 	
 	public Consumer(){
-		props.put("zk.connect", "localhost:2181");
+		props = new Properties();
+		props.put("zk.connect", KafkaProperties.zkConnect);
+		props.put("groupid", KafkaProperties.groupId);
+		props.put("zk.sessiontimeout.ms", "400");
+		props.put("zk.synctime.ms", "200");
+		props.put("autocommit.interval.ms", "1000");
 		props.put("zk.connectiontimeout.ms", "1000000");
-		props.put("groupid", "test_group");
 		consumerConfig = new ConsumerConfig(props);
-		consumerConnector = kafka.consumer.Consumer.create(consumerConfig);
+		consumerConnector = kafka.consumer.Consumer.createJavaConsumerConnector(consumerConfig);
 	}
 	
 	@SuppressWarnings("serial")
